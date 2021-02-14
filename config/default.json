@@ -1,0 +1,3 @@
+{
+    "mongoURI": "mongodb+srv://natourAdmin:<password>@cluster0.84cwx.mongodb.net/<dbname>?retryWrites=true&w=majority"
+}
