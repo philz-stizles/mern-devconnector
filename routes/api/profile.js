@@ -1,11 +1,20 @@
 const express = require('express');
-const { getProfiles } = require('../../controllers/profileControllers');
+const { verifyJWTToken } = require('../../middlewares/authMiddleware');
+const { createProfile, getAllProfiles, getProfile, updateProfile } = require('../../controllers/profileControllers');
 
 const router = express.Router();
 
-// @route GET api/profile
-// @description
-// @access Public
-router.get('/', getProfiles);
+// @routes  [POST, GET, PUT] api/profile
+// @desc
+// @access  Private
+router.route('/', verifyJWTToken)
+    .post(createProfile)
+    .get(getAllProfiles)
+    .put(updateProfile);
+
+// @routes  [GET] api/profile/me
+// @desc    Get current users profile
+// @access  Private
+router.get('/me', verifyJWTToken, getProfile)
 
 module.exports = router;
