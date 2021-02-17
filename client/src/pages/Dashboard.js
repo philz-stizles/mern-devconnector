@@ -1,18 +1,58 @@
-import React, { useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { getLoggedInUserProfile } from './../store/actions/profileActions'
+import Spinner from '../components/Spinner'
+import { Link } from 'react-router-dom'
+import Experience from '../components/Experience'
+import Education from '../components/Education'
 
-const Dashboard = ({ getLoggedInUserProfile, auth, profile }) => {
+const Dashboard = ({ 
+    getLoggedInUserProfile, 
+    auth: { loading, loggedInUser }, 
+    profile: { profile } 
+}) => {
     useEffect(() => {
         getLoggedInUserProfile()
     }, [])
 
-    return (
-        <div>
-            Dashboard
-        </div>
-    )
+    const deleteAccount = () => {
+
+    }
+    
+    return (loading && profile === null) 
+        ? <Spinner /> 
+        : (
+            <Fragment>
+                <h1 className="large text-primary">Dashboard</h1>
+                <p className="lead">
+                    <i className="fas fa-user" /> Welcome {loggedInUser && loggedInUser.name}
+                </p>
+                {
+                    (profile !== null) 
+                    ? (
+                        <Fragment>
+                            <Experience experience={profile.experience} />
+                            <Education education={profile.education} />
+
+                            <div className="my-2">
+                                <button className="btn btn-danger" onClick={() => deleteAccount()}>
+                                <i className="fas fa-user-minus" /> Delete My Account
+                                </button>
+                            </div>
+                        </Fragment>
+                    )
+                    : (
+                        <Fragment>
+                            <p>You have not yet setup a profile, please add some info</p>
+                            <Link to="/create-profile" className="btn btn-primary my-1">
+                                Create Profile
+                            </Link>
+                        </Fragment>
+                    )
+                }
+            </Fragment>
+        )
 }
 
 Dashboard.propTypes = {

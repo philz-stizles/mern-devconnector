@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Posts = ({ posts }) => {
+const PostItem = ({ post }) => {
     return (
         <div>
             
@@ -9,8 +9,8 @@ const Posts = ({ posts }) => {
     )
 }
 
-Posts.propTypes = {
-    posts: PropTypes.array.isRequired,
+PostItem.propTypes = {
+    post: PropTypes.object.isRequired,
 }
 
-export default Posts
+export default PostItem

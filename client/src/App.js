@@ -12,6 +12,7 @@ import { loadLoggedInUser } from './store/actions/authActions'
 import setAuthToken from './utils/axios-util';
 import Dashboard from './pages/Dashboard';
 import PrivateRoute from './routes/PrivateRoute';
+import CreateProfile from './pages/CreateProfile';
 
 const token = localStorage.getItem('token');
 if(token) {
@@ -35,6 +36,7 @@ const App = () => {
               <Route exact path="/register" component={Register}/>
               <Route exact path="/login" component={Login}/>
               <PrivateRoute exact path="/dashboard" component={Dashboard}/>
+              <PrivateRoute exact path="/create-profile" component={CreateProfile}/>
             </Switch>
           </section>
         </Fragment>
