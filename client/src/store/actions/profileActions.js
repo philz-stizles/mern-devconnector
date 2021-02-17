@@ -26,3 +26,25 @@ export const getLoggedInUserProfile = () => async dispatch => {
         })
     }
 }
+
+export const createProfile = () => async dispatch => {
+    try {
+        const response = await axios.get('/api/profile/me');
+        console.log(response.data);
+        dispatch({
+            type: GET_PROFILE,
+            payload: response.data.data
+        })
+        // dispatch(setAlert('success', response.data.message))
+    } catch (error) {
+        console.log(error.response);
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: {
+                message: error.response.data.message,
+                statusText: error.response.statusText,
+                status: error.response.status
+            }
+        })
+    }
+}
