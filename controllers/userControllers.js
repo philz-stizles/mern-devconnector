@@ -54,8 +54,13 @@ exports.createUser = async (req, res) => {
                 status: true,
                 data: {
                     token,
-                    loggedInUser: newUser
-                }
+                    loggedInUser: {
+                        name: newUser.name,
+                        email: newUser.email,
+                        avatar: newUser.avatar
+                    }
+                },
+                message: 'Sign up completed successfully'
             });
         });
 

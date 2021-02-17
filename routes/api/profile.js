@@ -1,20 +1,61 @@
 const express = require('express');
-const { verifyJWTToken } = require('../../middlewares/authMiddleware');
-const { createProfile, getAllProfiles, getProfile, updateProfile } = require('../../controllers/profileControllers');
+const { check } = require('express-validator');
+const { 
+    createOrUpdateProfile, 
+    getAllProfiles, 
+    getProfile, 
+    getLoggedInUserProfile, 
+    deleteProfile, 
+    updateProfileExperience, 
+    updateProfileEducation,
+    deleteProfileExperience, 
+    deleteProfileEducation,
+    getGithubProfile
+} = require('../../controllers/profileControllers');
 
 const router = express.Router();
 
-// @routes  [POST, GET, PUT] api/profile
+// @routes  [POST, GET] api/profile
 // @desc
 // @access  Private
-router.route('/', verifyJWTToken)
-    .post(createProfile)
+router.route('/')
+    .post([
+        check('status', 'Status is required').not().isEmpty(),
+        check('skills', 'Atleast a skill is required').not().isEmpty()
+    ], createOrUpdateProfile)
     .get(getAllProfiles)
-    .put(updateProfile);
 
-// @routes  [GET] api/profile/me
+// @routes  [GET] api/profile/:id
+// @desc
+// @access  Private
+router.route('/user/:user_id')
+    .get(getProfile)
+
+// @routes  [GET, DELETE] api/profile/me
 // @desc    Get current users profile
 // @access  Private
-router.get('/me', verifyJWTToken, getProfile)
+router.route('/me')
+    .get(getLoggedInUserProfile)
+    .delete(deleteProfile);
+
+router.route('/me/experience')
+    .put([
+        check('title', 'Title is required').not().isEmpty(),
+        check('company', 'Company name is required').not().isEmpty(),
+        check('from', 'From date is required').not().isEmpty()
+    ], updateProfileExperience)
+    
+router.delete('/me/experience/:id', deleteProfileExperience);
+
+router.put('/me/education', [
+        check('school', 'School is required').not().isEmpty(),
+        check('degree', 'Degree is required').not().isEmpty(),
+        check('fieldofstudy', 'Field is required').not().isEmpty(),
+        check('from', 'From date is required').not().isEmpty()
+    ], updateProfileEducation);
+
+router.delete('/me/education/:id', deleteProfileEducation);
+
+router.get('/github/:username', getGithubProfile);
 
 module.exports = router;

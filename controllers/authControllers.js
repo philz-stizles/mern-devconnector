@@ -116,8 +116,9 @@ exports.login = async (req, res) => {
                 status: true,
                 data: {
                     token,
-                    loggedInUser: existingUser
-                }
+                    loggedInUser: existingUser,
+                },
+                message: 'You are now logged in'
             });
         });
 
