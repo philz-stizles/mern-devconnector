@@ -1,24 +1,21 @@
 import React, { Fragment, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { getLoggedInUserProfile } from './../store/actions/profileActions'
+import { getLoggedInUserProfile, deleteAccount } from './../store/actions/profileActions'
 import Spinner from '../components/Spinner'
 import { Link } from 'react-router-dom'
 import Experience from '../components/Experience'
 import Education from '../components/Education'
 
 const Dashboard = ({ 
+    deleteAccount,
     getLoggedInUserProfile, 
     auth: { loading, loggedInUser }, 
     profile: { profile } 
 }) => {
     useEffect(() => {
         getLoggedInUserProfile()
-    }, [])
-
-    const deleteAccount = () => {
-
-    }
+    }, [getLoggedInUserProfile])
     
     return (loading && profile === null) 
         ? <Spinner /> 
@@ -32,8 +29,8 @@ const Dashboard = ({
                     (profile !== null) 
                     ? (
                         <Fragment>
-                            <Experience experience={profile.experience} />
-                            <Education education={profile.education} />
+                            <Experience experiences={profile.experience} />
+                            <Education educations={profile.education} />
 
                             <div className="my-2">
                                 <button className="btn btn-danger" onClick={() => deleteAccount()}>
@@ -56,6 +53,7 @@ const Dashboard = ({
 }
 
 Dashboard.propTypes = {
+    deleteAccount: PropTypes.func.isRequired,
     getLoggedInUserProfile: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired
@@ -68,4 +66,4 @@ const mapStateToProps = ({ auth, profile }) => {
     }
 }
 
-export default connect(mapStateToProps, { getLoggedInUserProfile })(Dashboard)
+export default connect(mapStateToProps, { getLoggedInUserProfile, deleteAccount })(Dashboard)

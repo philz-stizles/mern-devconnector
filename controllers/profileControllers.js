@@ -156,16 +156,13 @@ exports.deleteProfile = async (req, res) => {
     try {
 
         // Remove users posts
-        await Post
-            .findOneAndRemove({ user: req.user.id });
+        await Post.deleteMany({ user: req.user.id });
 
         // Remove users profile
-        await Profile
-            .findOneAndRemove({ user: req.user.id });
+        await Profile.findOneAndRemove({ user: req.user.id });
 
         // Remove user
-        await User
-            .findOneAndRemove({ _id: req.user.id });
+        await User.findOneAndRemove({ _id: req.user.id });
 
         res.status(200).json({
             status: true,
