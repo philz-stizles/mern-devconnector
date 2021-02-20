@@ -1,15 +1,16 @@
 import { 
-   GET_POSTS,
-   POSTS_ERROR
+    GET_POSTS,
+    POSTS_ERROR
 } from '../types'
 
 const initialState = {
     posts: [],
+    post: null,
     loading: true,
     error: null
 };
 
-const profileReducer = (state = initialState, action) => {
+const postReducer = (state = initialState, action) => {
     const { type, payload } = action
 
     switch (type) {
@@ -32,4 +33,4 @@ const profileReducer = (state = initialState, action) => {
     }
 }
 
-export default profileReducer
+export default postReducer

@@ -1,20 +1,21 @@
 import React, { Fragment, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { getLoggedInUserProfile } from './../store/actions/profileActions'
-import Spinner from '../components/Spinner'
+import { getLoggedInUserProfile } from '../../store/actions/profileActions'
+import Spinner from '../../components/Spinner'
 import { Link } from 'react-router-dom'
-import Experience from '../components/Experience'
-import Education from '../components/Education'
+import Experience from '../../components/dashboard/Experience'
+import Education from '../../components/dashboard/Education'
+import DashboardActions from '../../components/dashboard/DashboardActions'
 
 const Dashboard = ({ 
     getLoggedInUserProfile, 
-    auth: { loading, loggedInUser }, 
-    profile: { profile } 
+    auth: { loading: authLoading, loggedInUser }, 
+    profile: { loading, profile } 
 }) => {
     useEffect(() => {
         getLoggedInUserProfile()
-    }, [])
+    }, [getLoggedInUserProfile])
 
     const deleteAccount = () => {
 
@@ -32,6 +33,7 @@ const Dashboard = ({
                     (profile !== null) 
                     ? (
                         <Fragment>
+                            <DashboardActions />
                             <Experience experience={profile.experience} />
                             <Education education={profile.education} />
 
@@ -63,8 +65,8 @@ Dashboard.propTypes = {
 
 const mapStateToProps = ({ auth, profile }) => {
     return {
-        auth: auth,
-        profile: profile
+        auth,
+        profile
     }
 }
 
