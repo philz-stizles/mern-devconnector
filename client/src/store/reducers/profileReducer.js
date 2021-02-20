@@ -1,8 +1,8 @@
 import { 
     CLEAR_PROFILE,
-    GET_PROFILE,
-    PROFILE_ERROR,
-    UPDATE_PROFILE
+   GET_PROFILE,
+   UPDATE_PROFILE,
+   PROFILE_ERROR
 } from '../types'
 
 const initialState = {
