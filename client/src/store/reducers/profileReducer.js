@@ -1,8 +1,10 @@
 import { 
     CLEAR_PROFILE,
-   GET_PROFILE,
-   UPDATE_PROFILE,
-   PROFILE_ERROR
+    GET_PROFILE,
+    GET_PROFILES,
+    GET_REPOS,
+    UPDATE_PROFILE,
+    PROFILE_ERROR
 } from '../types'
 
 const initialState = {
@@ -25,11 +27,26 @@ const profileReducer = (state = initialState, action) => {
                 loading: false
             };
         
+        case GET_PROFILES:
+            return {
+                ...state,
+                profiles: payload,
+                loading: false
+            };
+
+        case GET_REPOS:
+            return {
+                ...state,
+                repos: payload,
+                loading: false
+            };
+
         case PROFILE_ERROR:
             return {
                 ...state,
                 error: payload,
-                loading: false
+                loading: false,
+                profile: null
             };
 
         case CLEAR_PROFILE:

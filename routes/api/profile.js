@@ -12,6 +12,7 @@ const {
     deleteProfileEducation,
     getGithubProfile
 } = require('../../controllers/profileControllers');
+const { verifyJWTToken } = require('./../../middlewares/authMiddleware');
 
 const router = express.Router();
 
@@ -22,7 +23,7 @@ router.route('/')
     .post([
         check('status', 'Status is required').not().isEmpty(),
         check('skills', 'Atleast a skill is required').not().isEmpty()
-    ], createOrUpdateProfile)
+    ], verifyJWTToken, createOrUpdateProfile)
     .get(getAllProfiles)
 
 // @routes  [GET] api/profile/:id
@@ -30,6 +31,11 @@ router.route('/')
 // @access  Private
 router.route('/user/:user_id')
     .get(getProfile)
+
+    router.get('/github/:username', getGithubProfile);
+
+// Authnticate all me routes
+router.use(verifyJWTToken)
 
 // @routes  [GET, DELETE] api/profile/me
 // @desc    Get current users profile
@@ -55,7 +61,5 @@ router.put('/me/education', [
     ], updateProfileEducation);
 
 router.delete('/me/education/:id', deleteProfileEducation);
-
-router.get('/github/:username', getGithubProfile);
 
 module.exports = router;

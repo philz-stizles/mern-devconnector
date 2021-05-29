@@ -113,10 +113,7 @@ exports.getLoggedInUserProfile = async (req, res) => {
 exports.getAllProfiles = async (req, res) => {
     try {
         const profiles = await Profile.find().populate('user', ['name', 'avatar']);
-        res.status(200).json({
-            status: true,
-            data: profiles
-        });
+        res.status(200).json({ status: true, data: profiles });
     } catch (error) {
         console.error(error);
         res.status(500).send('Server error');
@@ -334,7 +331,7 @@ exports.getGithubProfile = async (req, res) => {
             if(error) console.log(error);
 
             if(response.statusCode !== 200 ) {
-                res.status(404).json({
+                return res.status(404).json({
                     status: false,
                     message: 'No github profile found'
                 });

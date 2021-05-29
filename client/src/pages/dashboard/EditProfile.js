@@ -24,8 +24,23 @@ const EditProfile = ({ createOrEditProfile, history, profile: { profile, loading
     
     useEffect(() => {
         getLoggedInUserProfile()
+
+        setProfileForm({
+            company: (loading || !profile.company) ? '' : profile.company, 
+            website: (loading || !profile.website) ? '' : profile.website, 
+            location: (loading || !profile.location) ? '' : profile.location, 
+            bio: (loading || !profile.bio) ? '' : profile.bio, 
+            status: (loading || !profile.status) ? '' : profile.status, 
+            githubusername: (loading || !profile.githubusername) ? '' : profile.githubusername, 
+            skills: (loading || !profile.skills) ? '' : profile.skills.join(','), 
+            youtube: (loading || !profile.social) ? '' : profile.social.youtube, 
+            facebook: (loading || !profile.social) ? '' : profile.social.facebook, 
+            twitter: (loading || !profile.social) ? '' : profile.social.twitter, 
+            instagram: (loading || !profile.social) ? '' : profile.social.instagram, 
+            linkedin: (loading || !profile.social) ? '' : profile.social.linkedin
+        })
         
-    }, [])
+    }, [loading, getLoggedInUserProfile])
 
     const { 
         company, 

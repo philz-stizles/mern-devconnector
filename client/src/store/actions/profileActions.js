@@ -1,5 +1,7 @@
 import { 
     GET_PROFILE,
+    GET_PROFILES,
+    GET_REPOS,
     PROFILE_ERROR,
     UPDATE_PROFILE,
     ACCOUNT_DELETED,
@@ -19,6 +21,8 @@ export const getLoggedInUserProfile = () => async dispatch => {
         // dispatch(setAlert('success', response.data.message))
     } catch (error) {
         console.log(error.response);
+        dispatch({ type: CLEAR_PROFILE });
+        
         dispatch({
             type: PROFILE_ERROR,
             payload: {
@@ -211,3 +215,66 @@ export const deleteAccount = () => async dispatch => {
         }
     }
 }
+
+export const getProfiles = () => async dispatch => {
+    dispatch({ type: CLEAR_PROFILE })
+    try {
+        const response = await axios.get('/api/profile');
+        console.log(response.data);
+        dispatch({
+            type: GET_PROFILES,
+            payload: response.data.data
+        })
+        // dispatch(setAlert('success', response.data.message))
+    } catch (error) {
+        console.log(error.response);
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: {
+                message: error.response.data.message,
+                statusText: error.response.statusText,
+                status: error.response.status
+            }
+        })
+    }
+}
+
+export const getProfileById = userId => async dispatch => {
+    try {
+        const response = await axios.get(`/api/profile/user/${userId}`);
+        console.log(response.data);
+        dispatch({ type: GET_PROFILE, payload: response.data.data })
+    } catch (error) {
+        console.log(error.response);
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: {
+                message: error.response.data.message,
+                statusText: error.response.statusText,
+                status: error.response.status
+            }
+        })
+    }
+}
+
+export const getGithubRepos = username => async dispatch => {
+    try {
+        const response = await axios.get(`/api/profile/github/${username}`);
+        console.log(response.data);
+        dispatch({
+            type: GET_REPOS,
+            payload: response.data.data
+        })
+    } catch (error) {
+        console.log(error.response);
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: {
+                message: error.response.data.message,
+                statusText: error.response.statusText,
+                status: error.response.status
+            }
+        })
+    }
+}
+

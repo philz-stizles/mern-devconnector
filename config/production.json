@@ -1,6 +1,6 @@
 {
     "mongoURI": "mongodb+srv://natourAdmin:zVSPo8jbiJCM6TbX@cluster0.84cwx.mongodb.net/devConnector?retryWrites=true&w=majority",
-    "jwtSecret": "my-very-long-secret-token",
+    "jwtSecret": "ABCMXMWUQOEPXCSFDRETYUW",
     "githubClientId": "70261a197228af15d28c",
     "githubSecret": "ce429218d7363d12ffc397bee4bf29acb275f9c3"
 }
